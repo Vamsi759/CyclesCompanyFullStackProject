@@ -266,7 +266,7 @@ padding:20px;
 	// ---------------------- GET ALL ----------------------
 	function loadComponents() {
 
-	    fetch("/components/getall")
+	    fetch("http://localhost:8080/components/getall")
 	        .then(response => response.json())
 	        .then(data => {
 
@@ -398,6 +398,7 @@ padding:20px;
 	    })
 	    .then(response => response.text())
 	    .then(data => {
+	    	loadCycles();
 
 	        alert(data);
 
@@ -495,12 +496,14 @@ padding:20px;
 	            let names = "";
 	            let categories = "";
 	            let prices = "";
+	            let tprice=0;
 
 	            cycle.components.forEach(component => {
 
 	                names += component.name + "<br>";
 
 	                categories += component.category + "<br>";
+	                tprice+=component.price;
 
 	                prices += component.price + "<br>";
 
@@ -513,7 +516,7 @@ padding:20px;
 
 	                    <td>${cycle.cycleName}</td>
 
-	                    <td>${cycle.totalprice}</td>
+	                    <td>${tprice}</td>
 
 	                    <td>${names}</td>
 
