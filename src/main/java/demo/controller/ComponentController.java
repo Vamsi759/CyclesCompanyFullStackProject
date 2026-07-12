@@ -24,7 +24,7 @@ public class ComponentController {
 	@Autowired
 	ComponentRepository repository;
 	
-	UiPages p;
+	
 
 	@PostMapping("/add")
 	public Component save(@RequestBody Component component) {
