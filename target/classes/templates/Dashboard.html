@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomePage</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		background-color: rgb(236, 236, 236);
+		font-family: 'Segoe UI', Arial, sans-serif;
+		margin: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	header {
+		text-align: center;
+		background-color: rgb(166, 179, 179);
+		padding: 20px 10px;
+		margin-top: 0px;
+		margin-bottom: 70px;
+		color: #222;
+		font-size: 1.5rem;
+		font-weight: 600;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	.potos {
+		padding: 10px;
+		background-color: rgb(244, 242, 239);
+		margin-bottom: 50px;
+		border-radius: 8px;
+	}
+
+	img {
+		margin: 20px;
+		max-width: 100%;
+		border-radius: 6px;
+	}
+
+	.apone {
+		margin: 80px auto;
+		border: 2px solid black;
+		padding: 50px;
+		text-align: center;
+		max-width: 400px;
+		background-color: #fff;
+		border-radius: 12px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.apone .btn {
+		display: inline-block;
+		padding: 12px 24px;
+		font-weight: 600;
+		font-size: 1rem;
+		color: #222;
+		background-color: #f4f2ef;
+		border: 2px solid black !important;
+		border-radius: 8px;
+		text-decoration: none;
+		transition: all 0.25s ease;
+	}
+
+	.apone .btn:hover {
+		background-color: #222;
+		color: #fff;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+	}
+
+	.main {
+		flex: 1;
+	}
+</style>
+</head>
+
+<body>
+
+	<header>
+		Welcome
+	</header>
+
+	<div class="apone">
+		<a th:href="@{/api/openAdmin}" class="btn">Admin Login</a>
+		<a th:href="@{/api/openSalesHome}" class="btn">SalesHome</a>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+	</script>
+</body>
+
+</html>

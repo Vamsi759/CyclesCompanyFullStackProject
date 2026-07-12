@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HomeAndSalesDashboard</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<style>
+body {
+	background: #f2f2f2;
+}
+
+.container {
+	margin-top: 40px;
+}
+
+.card {
+	padding: 20px;
+}
+
+table {
+	background: white;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+.cycleconfig {
+    width: 500px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.cycleconfig h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-container label {
+    width: 250px;
+    font-weight: bold;
+}
+
+.form-container input {
+    width: 250px;
+    padding: 8px;
+}
+
+.form-container button {
+    width: 150px;
+    padding: 10px;
+}
+</style>
+
+</head>
+<body>
+<div class="head">
+<h1>HomeAndSalesDashBoard :</h1>
+</div>
+<hr>
+
+	<div class="container">
+	
+
+		<h2>Cycle Components</h2>
+
+		<!-- Add Component -->
+
+
+		<!-- Update Component -->
+
+
+
+
+
+
+
+
+		<!-- Component Table -->
+
+		<div class="card shadow">
+
+			<h4>All Components</h4>
+
+			<table class="table table-bordered table-hover">
+
+				<thead class="table-dark">
+
+					<tr>
+
+						<th>ID</th>
+						<th>Name</th>
+						<th>Category</th>
+						<th>Price</th>
+						<th>Model</th>
+						<th>Month</th>
+						<th>Quantity</th>
+
+
+					</tr>
+
+				</thead>
+
+				<tbody id="tableBody">
+
+
+				</tbody>
+
+			</table>
+
+		</div>
+		
+
+		<!-- Component Table -->
+		
+		
+		<div class="card shadow mt-4">
+
+			<div class="card-header">
+				<h4>All Cycles</h4>
+			</div>
+
+			<div class="card-body">
+
+				<table class="table table-bordered">
+
+					<thead class="table-dark">
+
+						<tr>
+							<th>ID</th>
+							<th>Cycle Name</th>
+							<th>Total Price</th>
+							<th>Component Names</th>
+							<th>Categories</th>
+							<th>Component Prices</th>
+						</tr>
+
+					</thead>
+
+					<tbody id="cycleTableBody">
+
+					</tbody>
+
+				</table>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<script>
+	// Load all components when page opens
+	loadComponents();
+
+	// ---------------------- GET ALL ----------------------
+	function loadComponents() {
+
+	    fetch("http://localhost:8080/components/getall")
+	        .then(response => response.json())
+	        .then(data => {
+
+	            let rows = "";
+
+	            data.forEach(function(s) {
+
+	                rows += `
+	                    <tr>
+	                        <td>${s.id}</td>
+	                        <td>${s.name}</td>
+	                        <td>${s.category}</td>
+	                        <td>${s.price}</td>
+	                        <td>${s.model}</td>
+	                        <td>${s.pricechangedmonth}</td>
+	                        <td>${s.quantity}</td>
+
+	                        
+	                    </tr>
+	                `;
+
+	            });
+
+	            document.getElementById("tableBody").innerHTML = rows;
+
+	        })
+	        .catch(error => console.log(error));
+
+	}
+
+	// ---------------------- ADD ----------------------
+	function addcmp() {
+
+	    const component = {
+
+	        name: document.getElementById("name").value,
+	        category: document.getElementById("category").value,
+	        price: Number(document.getElementById("price").value),
+	        model: Number(document.getElementById("model").value),
+	        pricechangedmonth: document.getElementById("month").value,
+	        quantity: Number(document.getElementById("quantity").value)
+
+	    };
+
+	    fetch("/components/add", {
+
+	        method: "POST",
+
+	        headers: {
+	            "Content-Type": "application/json"
+	        },
+
+	        body: JSON.stringify(component)
+
+	    })
+	    .then(response => response.json())
+	    .then(data => {
+
+	        alert("Component Saved Successfully");
+
+	        document.getElementById("componentForm").reset();
+
+	        loadComponents();
+
+	    })
+	    .catch(error => console.log(error));
+
+	}
+
+	// ---------------------- EDIT ----------------------
+	function editComponent(id) {
+
+    fetch("/components/get/" + id)
+    .then(response => response.json())
+    .then(data => {
+
+        document.getElementById("updateCard").style.display = "block";
+
+        document.getElementById("updateId").value = data.id;
+        document.getElementById("updateName").value = data.name;
+        document.getElementById("updateCategory").value = data.category;
+        document.getElementById("updatePrice").value = data.price;
+        document.getElementById("updateModel").value = data.model;
+        document.getElementById("updateMonth").value = data.pricechangedmonth;
+        document.getElementById("updateQuantity").value = data.quantity;
+
+        document.getElementById("updateCard").scrollIntoView({
+            behavior: "smooth"
+        });
+
+    })
+    .catch(error => console.log(error));
+
+}
+	function updateComponent() {
+
+	    const component = {
+
+	        id: Number(document.getElementById("updateId").value),
+	        name: document.getElementById("updateName").value,
+	        category: document.getElementById("updateCategory").value,
+	        price: Number(document.getElementById("updatePrice").value),
+	        model: Number(document.getElementById("updateModel").value),
+	        pricechangedmonth: document.getElementById("updateMonth").value,
+	        quantity: Number(document.getElementById("updateQuantity").value)
+
+	    };
+
+	    fetch("/components/update", {
+
+	        method: "PUT",
+
+	        headers: {
+	            "Content-Type": "application/json"
+	        },
+
+	        body: JSON.stringify(component)
+
+	    })
+	    .then(response => response.text())
+	    .then(data => {
+
+	        alert(data);
+
+	        document.getElementById("updateCard").style.display = "none";
+
+	        loadComponents();
+
+	    })
+	    .catch(error => console.log(error));
+
+	}
+
+	// ---------------------- DELETE ----------------------
+	function deleteComponent(id) {
+
+    if (!confirm("Delete this component?")) {
+        return;
+    }
+
+    fetch("/components/delete/" + id, {
+        method: "DELETE"
+    })
+    .then(response => response.text())
+    .then(data => {
+
+        alert(data);   // deleted or notdeleted
+
+        if (data === "deleted") {
+            loadComponents();
+        }
+
+    })
+    .catch(error => console.log(error));
+}
+	function saveCycle() {
+
+	    
+
+	    const cycleName = document.getElementById("cycleName").value;
+	    const bodyId = Number(document.getElementById("bodyId").value);
+	    const wheelId = Number(document.getElementById("wheelId").value);
+	    const gearId = Number(document.getElementById("gearId").value);
+
+	    const cycle = {
+	        cycleName: cycleName,
+	        components: [
+	            { id: bodyId },
+	            { id: wheelId },
+	            { id: gearId }
+	        ]
+	    };
+
+	    console.log(cycle);
+
+	    fetch("/cycles/add", {
+	        method: "POST",
+	        headers: {
+	            "Content-Type": "application/json"
+	        },
+	        body: JSON.stringify(cycle)
+	    })
+	    .then(response => response.json())
+	    .then(data => {
+	        console.log(data);
+	        loadCycles();
+	        document.getElementById("cycleName").value="";
+		    document.getElementById("bodyId").value="";
+		    document.getElementById("wheelId").value="";
+		    document.getElementById("gearId").value="";
+
+	        
+	        alert("Cycle Saved Successfully");
+	       
+	    })
+	    .catch(error => {
+	        console.error(error);
+	        alert("Error while saving");
+	    });
+	    loadCycles();
+
+	}
+	loadCycles();
+	function loadCycles() {
+
+	    fetch("/cycles/getall")
+
+	    .then(response => response.json())
+
+	    .then(data => {
+
+	        let rows = "";
+
+	        data.forEach(cycle => {
+
+	            let names = "";
+	            let categories = "";
+	            let prices = "";
+
+	            cycle.components.forEach(component => {
+
+	                names += component.name + "<br>";
+
+	                categories += component.category + "<br>";
+
+	                prices += component.price + "<br>";
+
+	            });
+
+	            rows += `
+	                <tr>
+
+	                    <td>${cycle.id}</td>
+
+	                    <td>${cycle.cycleName}</td>
+
+	                    <td>${cycle.totalprice}</td>
+
+	                    <td>${names}</td>
+
+	                    <td>${categories}</td>
+
+	                    <td>${prices}</td>
+
+	                </tr>
+	            `;
+
+	        });
+
+	        document.getElementById("cycleTableBody").innerHTML = rows;
+
+	    })
+
+	    .catch(error => console.log(error));
+
+	}
+	</script>
+	
+
+</body>
+</html>
