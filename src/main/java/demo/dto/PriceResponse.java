@@ -3,8 +3,7 @@ package demo.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
-@AllArgsConstructor
+
 public class PriceResponse {
 
 	private String cycleName;
