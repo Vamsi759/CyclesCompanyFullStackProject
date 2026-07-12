@@ -42,11 +42,7 @@ public class CycleController {
 	            .toList();
 
 	    cycle.setComponents(components);
-	    double p=0;
-	    for(int i=0;i<components.size();i++) {
-	    	p+=(components.get(i).getPrice());
-	    }
-	   cycle.setTotalprice(p);
+	   
 	   
 
 	    return repository.save(cycle);
