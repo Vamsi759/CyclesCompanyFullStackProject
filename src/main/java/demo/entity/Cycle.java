@@ -30,16 +30,7 @@ private String cycleName;
 )
 private List<Component> components;
 
-private Double totalprice;
 
-
-public double getTotalprice() {
-	return totalprice;
-}
-
-public void setTotalprice(double totalprice) {
-	this.totalprice = totalprice;
-}
 
 public Long getId() {
 	return id;
