@@ -1,5 +1,7 @@
 package demo.controller;
 
+import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,33 +31,29 @@ public class CycleController {
 
 	@Autowired
 	PricingService service;
-	
+
 	@Autowired
 	private ComponentRepository componentRepository;
 
 	@PostMapping("/add")
 	public Cycle saveCycle(@RequestBody Cycle cycle) {
 
-	    List<Component> components = cycle.getComponents()
-	            .stream()
-	            .map(c -> componentRepository.findById(c.getId()).orElseThrow())
-	            .toList();
+		List<Component> components = cycle.getComponents().stream()
+				.map(c -> componentRepository.findById(c.getId()).orElseThrow()).toList();
 
-	    List<Long> id1 = new ArrayList<>();
+		List<Long> idl = new ArrayList<>();
+		for (int i = 0; i < components.size(); i++) {
+			idl.add(components.get(i).getId());
+		}
+		if(idl.stream().distinct().toList().size()>2) {
+		cycle.setComponents(components);
 
-    for (int i = 0; i < components.size(); i++) {
-        id1.add(components.get(i).getId());
-    }
+		return repository.save(cycle);
+		}
+		return null;
 
-    if (id1.stream().distinct().toList().size() > 2) {
-        cycle.setComponents(components);
+	}
 
-        return repository.save(cycle);
-    }
-
-    return null;
-}
-	
 	@GetMapping("/getall")
 	public List<Cycle> getAll() {
 
