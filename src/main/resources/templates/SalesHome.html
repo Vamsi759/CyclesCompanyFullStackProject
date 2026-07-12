@@ -384,17 +384,19 @@ h2 {
 
 	        let rows = "";
 
-	        data.forEach(cycle => {
+	         data.forEach(cycle => {
 
 	            let names = "";
 	            let categories = "";
 	            let prices = "";
+	            let tprice=0;
 
 	            cycle.components.forEach(component => {
 
 	                names += component.name + "<br>";
 
 	                categories += component.category + "<br>";
+	                tprice+=component.price;
 
 	                prices += component.price + "<br>";
 
@@ -407,7 +409,7 @@ h2 {
 
 	                    <td>${cycle.cycleName}</td>
 
-	                    <td>${cycle.totalprice}</td>
+	                    <td>${tprice}</td>
 
 	                    <td>${names}</td>
 
