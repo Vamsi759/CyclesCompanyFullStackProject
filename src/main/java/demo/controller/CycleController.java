@@ -41,12 +41,20 @@ public class CycleController {
 	            .map(c -> componentRepository.findById(c.getId()).orElseThrow())
 	            .toList();
 
-	    cycle.setComponents(components);
-	   
-	   
+	    List<Long> id1 = new ArrayList<>();
 
-	    return repository.save(cycle);
-	}
+    for (int i = 0; i < components.size(); i++) {
+        id1.add(components.get(i).getId());
+    }
+
+    if (id1.stream().distinct().toList().size() > 2) {
+        cycle.setComponents(components);
+
+        return repository.save(cycle);
+    }
+
+    return null;
+}
 	
 	@GetMapping("/getall")
 	public List<Cycle> getAll() {
