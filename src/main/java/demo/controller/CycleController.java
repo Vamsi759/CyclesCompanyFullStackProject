@@ -42,10 +42,14 @@ public class CycleController {
 				.map(c -> componentRepository.findById(c.getId()).orElseThrow()).toList();
 
 		List<Long> idl = new ArrayList<>();
+		List<String> cl =  new ArrayList<>();
 		for (int i = 0; i < components.size(); i++) {
 			idl.add(components.get(i).getId());
+			cl.add(components.get(i).getCategory());
+			
+			
 		}
-		if(idl.stream().distinct().toList().size()>2) {
+		if(idl.stream().distinct().toList().size()>2 && cl.stream().distinct().toList().size()>2) {
 		cycle.setComponents(components);
 
 		return repository.save(cycle);
