@@ -274,7 +274,7 @@
 		// ---------------------- GET ALL ----------------------
 		function loadComponents() {
 
-			fetch("http://localhost:8080/components/getall")
+			fetch("/components/getall")
 				.then(response => response.json())
 				.then(data => {
 
