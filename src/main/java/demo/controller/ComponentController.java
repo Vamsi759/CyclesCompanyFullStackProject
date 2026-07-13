@@ -29,7 +29,11 @@ public class ComponentController {
 	@PostMapping("/add")
 	public Component save(@RequestBody Component component) {
 
-		return repository.save(component);
+		String c = component.getCategory();
+		if (c.equals("Gear") || c.equals("Body") || c.equals("Wheel")) {
+			return repository.save(component);
+		}
+		return null;
 
 	}
 
